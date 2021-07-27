@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>原神阴间解谜工具</title>
+    <script src="vue.global.prod.min.js"></script>
+    <style>
+        input{
+            width: 50px;
+        }
+        button{
+            margin: 2px;
+        }
+        .node{
+            padding: 10px;
+        }
+        .node button{
+            border: none;
+            transition: all .2s;
+            background-color: #bbb;
+            background-image: url("down.png");
+            background-repeat: no-repeat;
+            background-size: 30px 30px;
+            background-position: center;
+            width: 50px;
+            height: 50px;
+        }
+        .node button:after{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: purple;
+        }
+    </style>
+</head>
+<body>
+<h1>原神阴间解谜工具</h1>
+<div id="app">
+    <div>
+        <button @click="add">添加节点</button>
+        <button @click="remove">删除节点</button>
+        <button @click="compute">计算</button>
+        <select name="a" v-model="select">
+            <option selected hidden disabled value="">选择模板</option>
+            <option v-for="(v,k) in demo" :name="k">{{k}}</option>
+        </select>
+        {{res}}
+    </div>
+    <hr>
+    <div style="display: flex">
+        <div v-for="(v,k) in list" class="node">
+            <button @click="change(k)" :style="'transform:rotate('+v.v*90+'deg)'">
+            </button><br>
+            <input placeholder="规则" v-model="v.rely">
+        </div>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
