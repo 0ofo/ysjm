@@ -1,7 +1,7 @@
 let rely = [[0,2], [0, 1, 2], [0, 2, 4], [2, 3, 4], [3, 4]]
 let data = [0, 0, 0, 3, 0]
 let verify = '0'.repeat(data.length)
-let deep = data.length
+let deep = data.length*3
 Vue.createApp({
     data() {
         return {
@@ -52,7 +52,7 @@ Vue.createApp({
                 }))
             }
             verify = '0'.repeat(myData.length)
-            deep = myData.length
+            deep = data.length*3
             let res = recursion(myData).split('')
             this.res = res.map(v=>{
                 return parseInt(v)+1
