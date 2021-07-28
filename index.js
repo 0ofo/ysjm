@@ -1,7 +1,6 @@
-let rely = [[0,2], [0, 1, 2], [0, 2, 4], [2, 3, 4], [3, 4]]
-let data = [0, 0, 0, 3, 0]
-let verify = '0'.repeat(data.length)
-let deep = data.length
+let rely = []
+let verify = '0'
+const deep = 12
 Vue.createApp({
     data() {
         return {
@@ -44,7 +43,6 @@ Vue.createApp({
         compute(){
             let myData = []
             rely = []
-            data=[]
             for (const i of this.list) {
                 myData.push(i.v%4)
                 rely.push(i.rely.split(' ').map((value)=>{
@@ -52,9 +50,8 @@ Vue.createApp({
                 }))
             }
             verify = '0'.repeat(myData.length)
-            deep = myData.length+1
-            let res = recursion(myData).split('')
-            this.res = res.map(v=>{
+            let res = recursion([{n:'',list:myData}])
+            this.res = res.n.split('').map(v=>{
                 return parseInt(v)+1
             })
         }
@@ -80,16 +77,17 @@ function hit(data,i) {
     }
     return myData
 }
-function recursion(data, n=''){
-    if (n.length>deep) return null
-    console.log(n,data)
-    if (data.join('')==verify){
-        return n
-    }
-    for (const key in data) {
-        const r = recursion(hit(data,key),n+key)
-        if (r!=null || r!=undefined){
-            return r
+function recursion(ways){
+    if (ways[0].n.length>deep) return null
+    let myWays = []
+    for (const w in ways) {
+        if (ways[w].list.join('')==verify) return ways[w]
+        for (const i in ways[0].list) {
+            myWays.push({
+                n: ways[w].n + i,
+                list: hit(ways[w].list, i)
+            })
         }
     }
+    return recursion(myWays)
 }
